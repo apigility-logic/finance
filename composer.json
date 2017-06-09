@@ -1,0 +1,27 @@
+{
+    "name": "apigility-logic/finance",
+    "description": "Apigility Logic 财务组件",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "api",
+        "apigility",
+        "framework",
+        "zf2",
+        "logic",
+        "apigility-logic"
+    ],
+    "homepage": "http://github.com/apigility-logic",
+    "support": {
+        "email": "164713332@qq.com",
+        "source": "https://github.com/apigility-logic/finance",
+        "issues": "https://github.com/apigility-logic/finance/issues"
+    },
+    "require": {
+        "php": "^5.6 || ^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ApigilityLogic\\Finance\\": "src/"
+        }
+    }
+}
