@@ -9,7 +9,7 @@ return array(
     'doctrine' => array(
         'driver' => array(
             // defines an annotation driver with two paths, and names it `my_annotation_driver`
-            'apigility_finance_driver' => array(
+            'apigility_logic_finance_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => array(
