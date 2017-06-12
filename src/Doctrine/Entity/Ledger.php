@@ -32,9 +32,10 @@ class Ledger
     use Field\CreateTime;
 
     /**
-     * 账户名
+     * 账户所属客户
      *
-     * @Column(type="string", length=50, nullable=true)
+     * @ManyToOne(targetEntity="Account", inversedBy="ledgers")
+     * @JoinColumn(name="account_id", referencedColumnName="id")
      */
     protected $account;
 
@@ -45,12 +46,22 @@ class Ledger
      */
     protected $amount_type;
 
+    /**
+     * 对应的提现单
+     *
+     * @OneToOne(targetEntity="Withdraw", mappedBy="ledger")
+     */
+    protected $withdraw;
+
     public function setAccount($account)
     {
         $this->account = $account;
         return $this;
     }
 
+    /**
+     * @return Account
+     */
     public function getAccount()
     {
         return $this->account;
