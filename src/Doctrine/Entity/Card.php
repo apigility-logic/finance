@@ -9,6 +9,7 @@
 namespace ApigilityLogic\Finance\Doctrine\Entity;
 
 use ApigilityLogic\Foundation\Doctrine\Field;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\InheritanceType;
@@ -45,6 +46,18 @@ class Card
      */
     protected $customer;
 
+    /**
+     * 通过此卡提现的所有提现单
+     *
+     * @OneToMany(targetEntity="CardWithdraw", mappedBy="card")
+     */
+    protected $cardWithdraws;
+
+    function __construct()
+    {
+        $this->cardWithdraws = new ArrayCollection();
+    }
+
     public function setBankName($bank_name)
     {
         $this->bank_name = $bank_name;
@@ -54,5 +67,10 @@ class Card
     public function getBankName()
     {
         return $this->bank_name;
+    }
+
+    public function getCardWithdraws()
+    {
+        return $this->cardWithdraws;
     }
 }
