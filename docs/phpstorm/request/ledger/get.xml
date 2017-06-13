@@ -2,7 +2,7 @@
   <option name="biscuits">
     <list>
       <Biscuit>
-        <option name="date" value="1497253806000" />
+        <option name="date" value="1497344521000" />
         <option name="domain" value="localhost" />
         <option name="name" value="XDEBUG_SESSION" />
         <option name="path" value="/" />
@@ -32,18 +32,6 @@
         <option name="value" value="docker" />
       </KeyValuePair>
       <KeyValuePair>
-        <option name="key" value="filter[0][field]" />
-        <option name="value" value="account" />
-      </KeyValuePair>
-      <KeyValuePair>
-        <option name="key" value="filter[0][type]" />
-        <option name="value" value="eq" />
-      </KeyValuePair>
-      <KeyValuePair>
-        <option name="key" value="filter[0][value]" />
-        <option name="value" value="commission_balance_4" />
-      </KeyValuePair>
-      <KeyValuePair>
         <option name="key" value="order-by[0][field]" />
         <option name="value" value="id" />
       </KeyValuePair>
@@ -55,12 +43,72 @@
         <option name="key" value="order-by[0][direction]" />
         <option name="value" value="desc" />
       </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[0][type]" />
+        <option name="value" value="innerjoin" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[0][field]" />
+        <option name="value" value="account" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[0][alias]" />
+        <option name="value" value="acc" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[1][type]" />
+        <option name="value" value="innerjoin" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[1][parentAlias]" />
+        <option name="value" value="acc" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[1][field]" />
+        <option name="value" value="customer" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[1][alias]" />
+        <option name="value" value="cus" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[3][type]" />
+        <option name="value" value="eq" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[3][alias]" />
+        <option name="value" value="cus" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[3][field]" />
+        <option name="value" value="id" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[3][value]" />
+        <option name="value" value="5" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[4][type]" />
+        <option name="value" value="eq" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[4][alias]" />
+        <option name="value" value="acc" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[4][field]" />
+        <option name="value" value="name" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[4][value]" />
+        <option name="value" value="balance" />
+      </KeyValuePair>
     </list>
   </option>
   <option name="parametersEnabled" value="true" />
   <option name="haveTextToSend" value="false" />
   <option name="haveFileToSend" value="false" />
   <option name="isFileUpload" value="false" />
-  <option name="textToSend" value="" />
+  <option name="textToSend" value="{      &quot;code&quot;: &quot;asdfads&quot;,    &quot;name&quot;:&quot;测试分佣者&quot;,   &quot;upstream_distributor&quot;: 1 }" />
   <option name="filesToSend" value="" />
 </RestClientRequest>

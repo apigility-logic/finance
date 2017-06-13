@@ -10,6 +10,7 @@ namespace ApigilityLogic\Finance\Doctrine\Entity;
 
 
 use ApigilityLogic\Foundation\Doctrine\Field;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\ManyToOne;
@@ -49,6 +50,12 @@ class Account
      * @OneToMany(targetEntity="Withdraw", mappedBy="card")
      */
     protected $withdraws;
+
+    function __construct()
+    {
+        $this->ledgers = new ArrayCollection();
+        $this->withdraws = new ArrayCollection();
+    }
 
     public function setCustomer($customer)
     {
