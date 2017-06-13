@@ -8,9 +8,22 @@
 
 namespace ApigilityLogic\Finance\Doctrine\Entity;
 
-
 use ApigilityLogic\Foundation\Doctrine\Field;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\InheritanceType;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
 
+/**
+ * Class Withdraw
+ * @package ApigilityLogic\Finance\Doctrine\Entity
+ * @Entity @Table(name="al_finance_withdraw")
+ * @InheritanceType("SINGLE_TABLE")
+ * @DiscriminatorColumn(name="type", type="string")
+ */
 class Withdraw
 {
     use Field\Id;

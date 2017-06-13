@@ -13,6 +13,7 @@ use ApigilityLogic\Foundation\Doctrine\Field;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 
@@ -48,5 +49,19 @@ class Customer
     {
         $this->accounts = new ArrayCollection();
         $this->cards = new ArrayCollection();
+    }
+
+    public function setAccounts($accounts)
+    {
+        $this->accounts = $accounts;
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection|Account[]
+     */
+    public function getAccounts()
+    {
+        return $this->accounts;
     }
 }

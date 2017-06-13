@@ -28,7 +28,6 @@ class LedgerService
     {
         $ledger = new DoctrineEntity\Ledger();
         if (isset($data->account)) $ledger->setAccount($data->account);
-        else $ledger->setAccount(self::DEFAULT_ACCOUNT_NAME);
 
         if (isset($data->amount)) $ledger->setAmount($data->amount);
         else throw new \Exception('没有输入发生额', 500);
@@ -78,7 +77,7 @@ class LedgerService
      * @param string $account
      * @return \ApigilityLogic\Finance\Doctrine\Entity\Ledger|null
      */
-    public function getTopLedger($account = self::DEFAULT_ACCOUNT_NAME)
+    public function getTopLedger($account = null)
     {
         return $this->em->getRepository('ApigilityLogic\Finance\Doctrine\Entity\Ledger')->findOneBy([
             'account' => $account
