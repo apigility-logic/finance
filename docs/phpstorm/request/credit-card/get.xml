@@ -1,0 +1,66 @@
+<RestClientRequest>
+  <option name="biscuits">
+    <list>
+      <Biscuit>
+        <option name="date" value="1497344521000" />
+        <option name="domain" value="localhost" />
+        <option name="name" value="XDEBUG_SESSION" />
+        <option name="path" value="/" />
+        <option name="value" value="docker" />
+      </Biscuit>
+    </list>
+  </option>
+  <option name="httpMethod" value="GET" />
+  <option name="urlBase" value="http://localhost:8004" />
+  <option name="urlPath" value="/apigility-logic/finance/credit-card" />
+  <option name="headers">
+    <list>
+      <KeyValuePair>
+        <option name="key" value="Accept" />
+        <option name="value" value="*/*" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="Cache-Control" />
+        <option name="value" value="no-cache" />
+      </KeyValuePair>
+    </list>
+  </option>
+  <option name="parameters">
+    <list>
+      <KeyValuePair>
+        <option name="key" value="filter[0][type]" />
+        <option name="value" value="innerjoin" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[0][field]" />
+        <option name="value" value="customer" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[0][alias]" />
+        <option name="value" value="cus" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[3][type]" />
+        <option name="value" value="eq" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[3][alias]" />
+        <option name="value" value="cus" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[3][field]" />
+        <option name="value" value="id" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="filter[3][value]" />
+        <option name="value" value="4" />
+      </KeyValuePair>
+    </list>
+  </option>
+  <option name="parametersEnabled" value="true" />
+  <option name="haveTextToSend" value="false" />
+  <option name="haveFileToSend" value="false" />
+  <option name="isFileUpload" value="false" />
+  <option name="textToSend" value="{      &quot;code&quot;: &quot;asdfads&quot;,    &quot;name&quot;:&quot;测试分佣者&quot;,   &quot;upstream_distributor&quot;: 1 }" />
+  <option name="filesToSend" value="" />
+</RestClientRequest>
