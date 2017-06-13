@@ -10,6 +10,7 @@ namespace ApigilityLogic\Finance\Doctrine\Entity;
 
 
 use ApigilityLogic\Foundation\Doctrine\Field;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\InheritanceType;
@@ -42,4 +43,10 @@ class Customer
      * @OneToMany(targetEntity="Card", mappedBy="customer")
      */
     protected $cards;
+
+    function __construct()
+    {
+        $this->accounts = new ArrayCollection();
+        $this->cards = new ArrayCollection();
+    }
 }

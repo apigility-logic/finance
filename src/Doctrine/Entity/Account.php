@@ -34,4 +34,29 @@ class Account
      * @JoinColumn(name="customer_id", referencedColumnName="id")
      */
     protected $customer;
+
+    /**
+     * 账户包含的记账记录
+     *
+     * @OneToMany(targetEntity="Ledger", mappedBy="account")
+     */
+    protected $ledgers;
+
+    /**
+     * 账户的所有提现单
+     *
+     * @OneToMany(targetEntity="Withdraw", mappedBy="card")
+     */
+    protected $withdraws;
+
+    public function setCustomer($customer)
+    {
+        $this->customer = $customer;
+        return $this;
+    }
+
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
 }

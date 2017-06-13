@@ -68,9 +68,4 @@ class Card
     {
         return $this->bank_name;
     }
-
-    public function getCardWithdraws()
-    {
-        return $this->cardWithdraws;
-    }
 }
