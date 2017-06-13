@@ -5,4 +5,17 @@
  * Date: 2016/11/30
  * Time: 16:32
  */
-return [];
+return [
+    'zf-apigility-doctrine-query-create-filter' => [
+        'factories' => [
+            \ApigilityLogic\Finance\Doctrine\Query\CreateFilter\CardCreateFilter::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
+        ],
+    ],
+    'zf-apigility' => [
+        'doctrine-connected' => [
+            \ApigilityLogic\Finance\V1\Rest\CreditCard\CreditCardResource::class => [
+                'query_create_filter' => \ApigilityLogic\Finance\Doctrine\Query\CreateFilter\CardCreateFilter::class,
+            ],
+        ],
+    ],
+];
