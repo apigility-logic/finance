@@ -20,12 +20,32 @@ return [
                     ],
                 ],
             ],
+            'apigility-logic\\finance.rest.doctrine.card-withdraw' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/apigility-logic/finance/card-withdraw[/:card_withdraw_id]',
+                    'defaults' => [
+                        'controller' => 'ApigilityLogic\\Finance\\V1\\Rest\\CardWithdraw\\Controller',
+                    ],
+                ],
+            ],
+            'apigility-logic\\finance.rest.doctrine.credit-card' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/apigility-logic/finance/credit-card[/:credit_card_id]',
+                    'defaults' => [
+                        'controller' => 'ApigilityLogic\\Finance\\V1\\Rest\\CreditCard\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'zf-versioning' => [
         'uri' => [
             0 => 'apigility-logic\\finance.rest.doctrine.ledger',
             1 => 'apigility-logic\\finance.rest.doctrine.account',
+            2 => 'apigility-logic\\finance.rest.doctrine.card-withdraw',
+            3 => 'apigility-logic\\finance.rest.doctrine.credit-card',
         ],
     ],
     'zf-rest' => [
@@ -75,11 +95,59 @@ return [
             'collection_class' => \ApigilityLogic\Finance\V1\Rest\Account\AccountCollection::class,
             'service_name' => 'Account',
         ],
+        'ApigilityLogic\\Finance\\V1\\Rest\\CardWithdraw\\Controller' => [
+            'listener' => \ApigilityLogic\Finance\V1\Rest\CardWithdraw\CardWithdrawResource::class,
+            'route_name' => 'apigility-logic\\finance.rest.doctrine.card-withdraw',
+            'route_identifier_name' => 'card_withdraw_id',
+            'entity_identifier_name' => 'id',
+            'collection_name' => 'card_withdraw',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \ApigilityLogic\Finance\Doctrine\Entity\CardWithdraw::class,
+            'collection_class' => \ApigilityLogic\Finance\V1\Rest\CardWithdraw\CardWithdrawCollection::class,
+            'service_name' => 'CardWithdraw',
+        ],
+        'ApigilityLogic\\Finance\\V1\\Rest\\CreditCard\\Controller' => [
+            'listener' => \ApigilityLogic\Finance\V1\Rest\CreditCard\CreditCardResource::class,
+            'route_name' => 'apigility-logic\\finance.rest.doctrine.credit-card',
+            'route_identifier_name' => 'credit_card_id',
+            'entity_identifier_name' => 'id',
+            'collection_name' => 'credit_card',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \ApigilityLogic\Finance\Doctrine\Entity\CreditCard::class,
+            'collection_class' => \ApigilityLogic\Finance\V1\Rest\CreditCard\CreditCardCollection::class,
+            'service_name' => 'CreditCard',
+        ],
     ],
     'zf-content-negotiation' => [
         'controllers' => [
             'ApigilityLogic\\Finance\\V1\\Rest\\Ledger\\Controller' => 'HalJson',
             'ApigilityLogic\\Finance\\V1\\Rest\\Account\\Controller' => 'HalJson',
+            'ApigilityLogic\\Finance\\V1\\Rest\\CardWithdraw\\Controller' => 'HalJson',
+            'ApigilityLogic\\Finance\\V1\\Rest\\CreditCard\\Controller' => 'HalJson',
         ],
         'accept-whitelist' => [
             'ApigilityLogic\\Finance\\V1\\Rest\\Ledger\\Controller' => [
@@ -92,12 +160,28 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'ApigilityLogic\\Finance\\V1\\Rest\\CardWithdraw\\Controller' => [
+                0 => 'application/vnd.apigility-logic\\finance.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
+            'ApigilityLogic\\Finance\\V1\\Rest\\CreditCard\\Controller' => [
+                0 => 'application/vnd.apigility-logic\\finance.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content-type-whitelist' => [
             'ApigilityLogic\\Finance\\V1\\Rest\\Ledger\\Controller' => [
                 0 => 'application/json',
             ],
             'ApigilityLogic\\Finance\\V1\\Rest\\Account\\Controller' => [
+                0 => 'application/json',
+            ],
+            'ApigilityLogic\\Finance\\V1\\Rest\\CardWithdraw\\Controller' => [
+                0 => 'application/json',
+            ],
+            'ApigilityLogic\\Finance\\V1\\Rest\\CreditCard\\Controller' => [
                 0 => 'application/json',
             ],
         ],
@@ -126,6 +210,28 @@ return [
                 'route_name' => 'apigility-logic\\finance.rest.doctrine.account',
                 'is_collection' => true,
             ],
+            \ApigilityLogic\Finance\Doctrine\Entity\CardWithdraw::class => [
+                'route_identifier_name' => 'card_withdraw_id',
+                'entity_identifier_name' => 'id',
+                'route_name' => 'apigility-logic\\finance.rest.doctrine.card-withdraw',
+                'hydrator' => 'ApigilityLogic\\Finance\\V1\\Rest\\CardWithdraw\\CardWithdrawHydrator',
+            ],
+            \ApigilityLogic\Finance\V1\Rest\CardWithdraw\CardWithdrawCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'apigility-logic\\finance.rest.doctrine.card-withdraw',
+                'is_collection' => true,
+            ],
+            \ApigilityLogic\Finance\Doctrine\Entity\CreditCard::class => [
+                'route_identifier_name' => 'credit_card_id',
+                'entity_identifier_name' => 'id',
+                'route_name' => 'apigility-logic\\finance.rest.doctrine.credit-card',
+                'hydrator' => 'ApigilityLogic\\Finance\\V1\\Rest\\CreditCard\\CreditCardHydrator',
+            ],
+            \ApigilityLogic\Finance\V1\Rest\CreditCard\CreditCardCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'apigility-logic\\finance.rest.doctrine.credit-card',
+                'is_collection' => true,
+            ],
         ],
     ],
     'zf-apigility' => [
@@ -137,6 +243,14 @@ return [
             \ApigilityLogic\Finance\V1\Rest\Account\AccountResource::class => [
                 'object_manager' => 'doctrine.entitymanager.orm_default',
                 'hydrator' => 'ApigilityLogic\\Finance\\V1\\Rest\\Account\\AccountHydrator',
+            ],
+            \ApigilityLogic\Finance\V1\Rest\CardWithdraw\CardWithdrawResource::class => [
+                'object_manager' => 'doctrine.entitymanager.orm_default',
+                'hydrator' => 'ApigilityLogic\\Finance\\V1\\Rest\\CardWithdraw\\CardWithdrawHydrator',
+            ],
+            \ApigilityLogic\Finance\V1\Rest\CreditCard\CreditCardResource::class => [
+                'object_manager' => 'doctrine.entitymanager.orm_default',
+                'hydrator' => 'ApigilityLogic\\Finance\\V1\\Rest\\CreditCard\\CreditCardHydrator',
             ],
         ],
     ],
@@ -155,6 +269,20 @@ return [
             'strategies' => [],
             'use_generated_hydrator' => true,
         ],
+        'ApigilityLogic\\Finance\\V1\\Rest\\CardWithdraw\\CardWithdrawHydrator' => [
+            'entity_class' => \ApigilityLogic\Finance\Doctrine\Entity\CardWithdraw::class,
+            'object_manager' => 'doctrine.entitymanager.orm_default',
+            'by_value' => true,
+            'strategies' => [],
+            'use_generated_hydrator' => true,
+        ],
+        'ApigilityLogic\\Finance\\V1\\Rest\\CreditCard\\CreditCardHydrator' => [
+            'entity_class' => \ApigilityLogic\Finance\Doctrine\Entity\CreditCard::class,
+            'object_manager' => 'doctrine.entitymanager.orm_default',
+            'by_value' => true,
+            'strategies' => [],
+            'use_generated_hydrator' => true,
+        ],
     ],
     'zf-content-validation' => [
         'ApigilityLogic\\Finance\\V1\\Rest\\Ledger\\Controller' => [
@@ -162,6 +290,12 @@ return [
         ],
         'ApigilityLogic\\Finance\\V1\\Rest\\Account\\Controller' => [
             'input_filter' => 'ApigilityLogic\\Finance\\V1\\Rest\\Account\\Validator',
+        ],
+        'ApigilityLogic\\Finance\\V1\\Rest\\CardWithdraw\\Controller' => [
+            'input_filter' => 'ApigilityLogic\\Finance\\V1\\Rest\\CardWithdraw\\Validator',
+        ],
+        'ApigilityLogic\\Finance\\V1\\Rest\\CreditCard\\Controller' => [
+            'input_filter' => 'ApigilityLogic\\Finance\\V1\\Rest\\CreditCard\\Validator',
         ],
     ],
     'input_filter_specs' => [
@@ -224,6 +358,151 @@ return [
                 'required' => false,
                 'filters' => [],
                 'validators' => [],
+            ],
+        ],
+        'ApigilityLogic\\Finance\\V1\\Rest\\CardWithdraw\\Validator' => [
+            0 => [
+                'name' => 'amount',
+                'required' => true,
+                'filters' => [],
+                'validators' => [],
+            ],
+            1 => [
+                'name' => 'create_time',
+                'required' => false,
+                'filters' => [],
+                'validators' => [],
+            ],
+            2 => [
+                'name' => 'update_time',
+                'required' => false,
+                'filters' => [],
+                'validators' => [],
+            ],
+            3 => [
+                'name' => 'status',
+                'required' => true,
+                'filters' => [],
+                'validators' => [],
+            ],
+        ],
+        'ApigilityLogic\\Finance\\V1\\Rest\\CreditCard\\Validator' => [
+            0 => [
+                'name' => 'bank_name',
+                'required' => false,
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                    ],
+                ],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'min' => 1,
+                            'max' => 50,
+                        ],
+                    ],
+                ],
+            ],
+            1 => [
+                'name' => 'name',
+                'required' => false,
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                    ],
+                ],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'min' => 1,
+                            'max' => 50,
+                        ],
+                    ],
+                ],
+            ],
+            2 => [
+                'name' => 'create_time',
+                'required' => false,
+                'filters' => [],
+                'validators' => [],
+            ],
+            3 => [
+                'name' => 'update_time',
+                'required' => false,
+                'filters' => [],
+                'validators' => [],
+            ],
+            4 => [
+                'name' => 'tel',
+                'required' => false,
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                    ],
+                ],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'min' => 1,
+                            'max' => 20,
+                        ],
+                    ],
+                ],
+            ],
+            5 => [
+                'name' => 'number',
+                'required' => false,
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                    ],
+                ],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'min' => 1,
+                            'max' => 255,
+                        ],
+                    ],
+                ],
+            ],
+            6 => [
+                'name' => 'identity_card_number',
+                'required' => false,
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                    ],
+                ],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'min' => 1,
+                            'max' => 255,
+                        ],
+                    ],
+                ],
             ],
         ],
     ],
