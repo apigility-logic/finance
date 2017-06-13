@@ -71,4 +71,18 @@ class Card
     {
         return $this->bank_name;
     }
+
+    public function setCustomer($customer)
+    {
+        $this->customer = $customer;
+        return $this;
+    }
+
+    /**
+     * @return Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
 }
