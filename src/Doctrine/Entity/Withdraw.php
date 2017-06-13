@@ -26,6 +26,10 @@ use Doctrine\ORM\Mapping\DiscriminatorColumn;
  */
 class Withdraw
 {
+    const STATUS_SUBMITTED = 1;  // 待审核
+    const STATUS_APPROVED = 2;   // 已审核
+    const STATUS_DONE = 3;       // 已处理
+
     use Field\Id;
     use Field\Amount;
     use Field\CreateTime;
@@ -47,4 +51,32 @@ class Withdraw
      * @JoinColumn(name="ledger_id", referencedColumnName="id")
      */
     protected $ledger;
+
+    public function setAccount($account)
+    {
+        $this->account = $account;
+        return $this;
+    }
+
+    /**
+     * @return Account
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
+
+    public function setLedger($ledger)
+    {
+        $this->ledger = $ledger;
+        return $this;
+    }
+
+    /**
+     * @return Ledger
+     */
+    public function getLedger()
+    {
+        return $this->ledger;
+    }
 }

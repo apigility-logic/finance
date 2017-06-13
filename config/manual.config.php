@@ -9,6 +9,7 @@ return [
     'zf-apigility-doctrine-query-create-filter' => [
         'factories' => [
             \ApigilityLogic\Finance\Doctrine\Query\CreateFilter\CardCreateFilter::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
+            \ApigilityLogic\Finance\Doctrine\Query\CreateFilter\WithdrawCreateFilter::class => \Zend\ServiceManager\Factory\InvokableFactory::class
         ],
     ],
     'zf-apigility' => [
@@ -16,6 +17,9 @@ return [
             \ApigilityLogic\Finance\V1\Rest\CreditCard\CreditCardResource::class => [
                 'query_create_filter' => \ApigilityLogic\Finance\Doctrine\Query\CreateFilter\CardCreateFilter::class,
             ],
+            \ApigilityLogic\Finance\V1\Rest\CardWithdraw\CardWithdrawResource::class => [
+                'query_create_filter' => \ApigilityLogic\Finance\Doctrine\Query\CreateFilter\WithdrawCreateFilter::class
+            ]
         ],
     ],
 ];

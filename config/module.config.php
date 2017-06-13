@@ -381,7 +381,7 @@ return [
             ],
             3 => [
                 'name' => 'status',
-                'required' => true,
+                'required' => false,
                 'filters' => [],
                 'validators' => [],
             ],
