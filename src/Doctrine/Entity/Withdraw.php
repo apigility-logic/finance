@@ -28,13 +28,20 @@ class Withdraw
 {
     const STATUS_SUBMITTED = 1;  // 待审核
     const STATUS_APPROVED = 2;   // 已审核
-    const STATUS_DONE = 3;       // 已处理
+    const STATUS_HANDLING = 3;   // 正在处理
+    const STATUS_DONE = 10;       // 处理成功
 
     use Field\Id;
     use Field\Amount;
     use Field\CreateTime;
     use Field\UpdateTime;
     use Field\Status;
+
+    /**
+     * 提现处理的交易订单号（银行或其他金融机构提供的）
+     * @var string
+     */
+    protected $transaction_number;
 
     /**
      * 提现的账户
@@ -51,6 +58,17 @@ class Withdraw
      * @JoinColumn(name="ledger_id", referencedColumnName="id")
      */
     protected $ledger;
+
+    public function setTransactionNumber($transaction_number)
+    {
+        $this->transaction_number = $transaction_number;
+        return $this;
+    }
+
+    public function getTransactionNumber()
+    {
+        return $this->transaction_number;
+    }
 
     public function setAccount($account)
     {
