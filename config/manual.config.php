@@ -22,4 +22,18 @@ return [
             ]
         ],
     ],
+    'apigility-logic' => [
+        'finance' => [
+            'withdraw' => [
+                'adapter' => [
+                    'enable' => false,
+                    'type' => \ApigilityLogic\Finance\Service\Adapter\KekepayAdapter::class,
+                    'options' => [
+                        'pay_key' => '',
+                        'pay_secret' => '',
+                    ]
+                ]
+            ]
+        ]
+    ]
 ];

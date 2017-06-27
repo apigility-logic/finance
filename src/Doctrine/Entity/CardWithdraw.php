@@ -33,6 +33,9 @@ class CardWithdraw extends Withdraw
         return $this;
     }
 
+    /**
+     * @return Card
+     */
     public function getCard()
     {
         return $this->card;

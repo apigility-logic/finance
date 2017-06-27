@@ -1,7 +1,10 @@
 <?php
 namespace ApigilityLogic\Finance;
 
+use ApigilityLogic\Finance\Listener\WithdrawListener;
+use ApigilityLogic\Finance\Listener\WithdrawServiceListener;
 use Zend\Config\Config;
+use Zend\Mvc\MvcEvent;
 use ZF\Apigility\Provider\ApigilityProviderInterface;
 
 class Module implements ApigilityProviderInterface
@@ -29,5 +32,20 @@ class Module implements ApigilityProviderInterface
                 ],
             ],
         ];
+    }
+
+    public function onBootstrap(MvcEvent $e)
+    {
+        $app      = $e->getTarget();
+        $services = $app->getServiceManager();
+        $events   = $app->getEventManager();
+
+        $sharedEvents = $events->getSharedManager();
+
+        $withdraw_listener = new WithdrawListener($services);
+        $withdraw_listener->attachShared($sharedEvents);
+
+        $withdraw_service_listener = new WithdrawServiceListener();
+        $withdraw_service_listener->attach($withdraw_listener->getEventManager());
     }
 }

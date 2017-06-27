@@ -14,10 +14,8 @@ use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerAwareTrait;
 use ZF\Rest\ResourceEvent;
 
-class WithdrawCreateFilter extends AbstractCreateFilter implements EventManagerAwareInterface
+class WithdrawCreateFilter extends AbstractCreateFilter
 {
-    use EventManagerAwareTrait;
-
     /**
      * @param ResourceEvent $event
      * @param string $entityClass
@@ -34,14 +32,5 @@ class WithdrawCreateFilter extends AbstractCreateFilter implements EventManagerA
         }
 
         return $data;
-    }
-
-    public function triggerEventEntityEvent($entity)
-    {
-        // 触发事件
-        $event = new WithdrawEvent(WithdrawEvent::EVENT_WITHDRAW_SWITCHED_TO_HANDLING);
-        $event->setTarget($this);
-        $event->setEntity($entity);
-        $this->getEventManager()->triggerEvent($event);
     }
 }

@@ -3,6 +3,7 @@ namespace ApigilityLogic\Finance\Event;
 
 use ApigilityLogic\Finance\Doctrine\Entity\Withdraw;
 use Zend\EventManager\Event;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * Created by PhpStorm.
@@ -16,9 +17,12 @@ class WithdrawEvent extends Event
 
     private $entity;
 
-    public function __construct($type)
+    private $serviceManager;
+
+    public function __construct($type, ServiceManager $serviceManager)
     {
         parent::__construct($type);
+        $this->serviceManager = $serviceManager;
     }
 
     /**
@@ -35,5 +39,10 @@ class WithdrawEvent extends Event
     public function getEntity()
     {
         return $this->entity;
+    }
+
+    public function getServiceManager()
+    {
+        return $this->serviceManager;
     }
 }
