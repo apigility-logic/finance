@@ -4,6 +4,7 @@ namespace ApigilityLogic\Finance\Service\Adapter;
 use ApigilityLogic\Finance\Doctrine\Entity\CardWithdraw;
 use Exception;
 use Zend\Http\Client;
+use Zend\Http\Headers;
 use Zend\Http\Request;
 
 /**
@@ -47,26 +48,32 @@ class KekepayAdapter extends AbstractWithdrawHandleAdapter
         ksort($sign_data);
         $sign_data['paySecret'] = $this->options['pay_secret'];
 
-        $post_data['sign'] = md5(http_build_query($sign_data));
+        $sign_query_data = '';
+        foreach ($sign_data as $k=>$v) {
+            if (!empty($sign_query_data)) $sign_query_data .= '&';
+            $sign_query_data .= $k . '=' . $v;
+        }
+
+        $post_data['sign'] = strtoupper(md5($sign_query_data));
 
         $this->initPay($post_data);
     }
 
     private function initPay($data = null) {
-        $request = new Request();
-        $request->setUri(self::API_URL_PAY);
-        $request->setMethod('POST');
+        $client = new Client();
+        $client->setUri(self::API_URL_PAY);
+        $client->setMethod('POST');
+        $client->setParameterPost($data);
 
         $headers = new \Zend\Http\Headers();
-        $headers->addHeader(new \Zend\Http\Header\ContentType('application/json'))
+        $headers
             ->addHeader((new \Zend\Http\Header\Accept())->addMediaType('application/json'));
-        $request->setHeaders($headers);
 
-        $request->setContent(json_encode($data));
+        $client->setHeaders($headers);
+        $client->setEncType('application/x-www-form-urlencoded');
 
-        $client = new Client();
         $client->setOptions(['timeout'=> 3600]);
-        $response = $client->send($request);
+        $response = $client->send();
 
         if (!$response->isSuccess()) {
             throw new Exception('接口请求失败');
