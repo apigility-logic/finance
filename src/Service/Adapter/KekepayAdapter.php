@@ -30,7 +30,7 @@ class KekepayAdapter extends AbstractWithdrawHandleAdapter
         $sign_data = [
             'payKey' => $this->options['pay_key'],
             'outTradeNo' => $withdraw->getId(),
-            'orderPrice' => $withdraw->getAmount(),
+            'orderPrice' => 5,//$withdraw->getAmount(),
             'proxyType' => 'T0',
             'productType' => 'WEIXIN',
             'bankAccountType' => self::BANK_ACCOUNT_TYPE_PRIVATE_DEBIT_ACCOUNT,
@@ -56,7 +56,13 @@ class KekepayAdapter extends AbstractWithdrawHandleAdapter
 
         $post_data['sign'] = strtoupper(md5($sign_query_data));
 
-        $this->initPay($post_data);
+        $result = $this->initPay($post_data);
+
+        if ($result->resultCode === '0000' || $result->resultCode === '9996') {
+            return $result->outTradeNo;
+        } else {
+            return null;
+        }
     }
 
     private function initPay($data = null) {
@@ -79,7 +85,7 @@ class KekepayAdapter extends AbstractWithdrawHandleAdapter
             throw new Exception('接口请求失败');
         } else {
             error_log('Kekepay action: initPay success !!!' . $response->getBody());
-            return $response;
+            return json_decode($response->getBody());
         }
     }
 

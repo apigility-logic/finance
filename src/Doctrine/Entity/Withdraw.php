@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\Column;
 
 /**
  * Class Withdraw
@@ -39,7 +40,7 @@ class Withdraw
 
     /**
      * 提现处理的交易订单号（银行或其他金融机构提供的）
-     * @var string
+     * @Column(type="string", length=255, nullable=true)
      */
     protected $transaction_number;
 
