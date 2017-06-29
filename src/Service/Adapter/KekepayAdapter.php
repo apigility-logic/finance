@@ -30,7 +30,7 @@ class KekepayAdapter extends AbstractWithdrawHandleAdapter
         $data = [
             'payKey' => $this->options['pay_key'],
             'outTradeNo' => $withdraw->getId(),
-            'orderPrice' => 5,//$withdraw->getAmount(),
+            'orderPrice' => $withdraw->getAmount() - 2,
             'proxyType' => 'T0',
             'productType' => 'WEIXIN',
             'bankAccountType' => self::BANK_ACCOUNT_TYPE_PRIVATE_DEBIT_ACCOUNT,
