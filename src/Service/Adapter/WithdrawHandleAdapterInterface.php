@@ -17,4 +17,11 @@ interface WithdrawHandleAdapterInterface
      * @return string 金融机构交易单号
      */
     public function handle($withdraw);
+
+    /**
+     * 查询提现单的处理结果
+     * @param $withdraw
+     * @return boolean 是否打款成功
+     */
+    public function checkStatus($withdraw);
 }

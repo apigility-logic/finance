@@ -27,7 +27,7 @@ class KekepayAdapter extends AbstractWithdrawHandleAdapter
      */
     public function handle($withdraw)
     {
-        $sign_data = [
+        $data = [
             'payKey' => $this->options['pay_key'],
             'outTradeNo' => $withdraw->getId(),
             'orderPrice' => 5,//$withdraw->getAmount(),
@@ -43,20 +43,8 @@ class KekepayAdapter extends AbstractWithdrawHandleAdapter
             'bankBranchNo' => $this->getRandBankBranchNo()
         ];
 
-        $post_data = $sign_data;
-
-        ksort($sign_data);
-        $sign_data['paySecret'] = $this->options['pay_secret'];
-
-        $sign_query_data = '';
-        foreach ($sign_data as $k=>$v) {
-            if (!empty($sign_query_data)) $sign_query_data .= '&';
-            $sign_query_data .= $k . '=' . $v;
-        }
-
-        $post_data['sign'] = strtoupper(md5($sign_query_data));
-
-        $result = $this->initPay($post_data);
+        $data['sign'] = $this->sign($data);
+        $result = $this->ApiInitPay($data);
 
         if ($result->resultCode === '0000' || $result->resultCode === '9996') {
             return $result->outTradeNo;
@@ -65,9 +53,58 @@ class KekepayAdapter extends AbstractWithdrawHandleAdapter
         }
     }
 
-    private function initPay($data = null) {
+    /**
+     * @inheritdoc
+     * @param $withdraw CardWithdraw
+     */
+    public function checkStatus($withdraw)
+    {
+        $data = [
+            'payKey' => $this->options['pay_key'],
+            'outTradeNo' => $withdraw->getId()
+        ];
+
+        $data['sign'] = $this->sign($data);
+        $result = $this->ApiQueryStatus($data);
+
+        if ($result->resultCode === '0000') {
+            if ($result->remitStatus === 'REMIT_SUCCESS') {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    private function ApiInitPay($data = null) {
         $client = new Client();
         $client->setUri(self::API_URL_PAY);
+        $client->setMethod('POST');
+        $client->setParameterPost($data);
+
+        $headers = new \Zend\Http\Headers();
+        $headers
+            ->addHeader((new \Zend\Http\Header\Accept())->addMediaType('application/json'));
+
+        $client->setHeaders($headers);
+        $client->setEncType('application/x-www-form-urlencoded');
+
+        $client->setOptions(['timeout'=> 3600]);
+        $response = $client->send();
+
+        if (!$response->isSuccess()) {
+            throw new Exception('接口请求失败');
+        } else {
+            error_log('Kekepay action: initPay success !!!' . $response->getBody());
+            return json_decode($response->getBody());
+        }
+    }
+
+    private function ApiQueryStatus($data = null) {
+        $client = new Client();
+        $client->setUri(self::API_URL_CHECK);
         $client->setMethod('POST');
         $client->setParameterPost($data);
 
@@ -109,5 +146,24 @@ class KekepayAdapter extends AbstractWithdrawHandleAdapter
         ];
 
         return $data[array_rand($data)];
+    }
+
+    /**
+     * 签名
+     * @param $data
+     * @return string
+     */
+    private function sign($data)
+    {
+        ksort($data);
+        $data['paySecret'] = $this->options['pay_secret'];
+
+        $sign_query_data = '';
+        foreach ($data as $k=>$v) {
+            if (!empty($sign_query_data)) $sign_query_data .= '&';
+            $sign_query_data .= $k . '=' . $v;
+        }
+
+        return strtoupper(md5($sign_query_data));
     }
 }
