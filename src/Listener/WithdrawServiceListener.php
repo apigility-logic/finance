@@ -29,6 +29,11 @@ class WithdrawServiceListener implements ListenerAggregateInterface
             WithdrawEvent::EVENT_WITHDRAW_SWITCHED_TO_HANDLING,
             [$this, 'payWithdraw']
         );
+
+        $this->listeners[] = $events->attach(
+            WithdrawEvent::EVENT_WITHDRAW_FETCHING_HANDLING_ENTITY,
+            [$this, 'updateWithdrawStatus']
+        );
     }
 
     /**
@@ -47,6 +52,17 @@ class WithdrawServiceListener implements ListenerAggregateInterface
         if ($adapter_config['enable']) {
             $withdraw_service = $event->getServiceManager()->get(WithdrawService::class);
             $withdraw_service->handleWithdraw($event->getEntity());
+        }
+    }
+
+    public function updateWithdrawStatus(WithdrawEvent $event)
+    {
+        $config = $event->getServiceManager()->get('config');
+        $adapter_config = $config['apigility-logic']['finance']['withdraw']['adapter'];
+
+        if ($adapter_config['enable']) {
+            $withdraw_service = $event->getServiceManager()->get(WithdrawService::class);
+            $withdraw_service->updateWithdrawHandleStatus($event->getEntity());
         }
     }
 }

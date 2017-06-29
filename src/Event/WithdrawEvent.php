@@ -14,6 +14,7 @@ use Zend\ServiceManager\ServiceManager;
 class WithdrawEvent extends Event
 {
     const EVENT_WITHDRAW_SWITCHED_TO_HANDLING = 'WithdrawEvent.EVENT_WITHDRAW_SWITCHED_TO_HANDLING';
+    const EVENT_WITHDRAW_FETCHING_HANDLING_ENTITY = 'WithdrawEvent.EVENT_WITHDRAW_FETCHING_HANDLING_ENTITY';
 
     private $entity;
 

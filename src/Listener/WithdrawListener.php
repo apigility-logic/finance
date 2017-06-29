@@ -35,28 +35,39 @@ class WithdrawListener implements EventManagerAwareInterface
         $listener_post =  $events->attach(
             'ZF\Apigility\Doctrine\DoctrineResource',
             DoctrineResourceEvent::EVENT_CREATE_POST,
-            [$this, 'triggerWithdrawEvent']
+            [$this, 'triggerWithdrawHandlingEvent']
         );
 
         $listener_patch =  $events->attach(
             'ZF\Apigility\Doctrine\DoctrineResource',
             DoctrineResourceEvent::EVENT_PATCH_POST,
-            [$this, 'triggerWithdrawEvent']
+            [$this, 'triggerWithdrawHandlingEvent']
+        );
+
+        $listener_fetch =  $events->attach(
+            'ZF\Apigility\Doctrine\DoctrineResource',
+            DoctrineResourceEvent::EVENT_FETCH_POST,
+            [$this, 'triggerWithdrawFetchEvent']
         );
 
         if (! $listener_post) {
-            $listener_post = [$this, 'triggerWithdrawEvent'];
+            $listener_post = [$this, 'triggerWithdrawHandlingEvent'];
         }
 
         if (! $listener_patch) {
-            $listener_patch = [$this, 'triggerWithdrawEvent'];
+            $listener_patch = [$this, 'triggerWithdrawHandlingEvent'];
+        }
+
+        if (! $listener_fetch) {
+            $listener_fetch = [$this, 'triggerWithdrawFetchEvent'];
         }
 
         $this->sharedListeners[] = $listener_post;
         $this->sharedListeners[] = $listener_patch;
+        $this->sharedListeners[] = $listener_fetch;
     }
 
-    public function triggerWithdrawEvent(DoctrineResourceEvent $event)
+    public function triggerWithdrawHandlingEvent(DoctrineResourceEvent $event)
     {
         if ($event->getEntity() instanceof Withdraw &&
             $event->getEntity()->getStatus() === Withdraw::STATUS_HANDLING  &&
@@ -64,6 +75,20 @@ class WithdrawListener implements EventManagerAwareInterface
 
             // 触发事件
             $withdraw_event = new WithdrawEvent(WithdrawEvent::EVENT_WITHDRAW_SWITCHED_TO_HANDLING, $this->sm);
+            $withdraw_event->setTarget($this);
+            $withdraw_event->setEntity($event->getEntity());
+            $this->getEventManager()->triggerEvent($withdraw_event);
+        }
+    }
+
+    public function triggerWithdrawFetchEvent(DoctrineResourceEvent $event)
+    {
+        if ($event->getEntity() instanceof Withdraw &&
+            $event->getEntity()->getStatus() === Withdraw::STATUS_HANDLING  &&
+            !empty($event->getEntity()->getTransactionNumber())) {
+
+            // 触发事件
+            $withdraw_event = new WithdrawEvent(WithdrawEvent::EVENT_WITHDRAW_FETCHING_HANDLING_ENTITY, $this->sm);
             $withdraw_event->setTarget($this);
             $withdraw_event->setEntity($event->getEntity());
             $this->getEventManager()->triggerEvent($withdraw_event);
