@@ -519,6 +519,12 @@ return [
                 'filters' => [],
                 'validators' => [],
             ],
+            4 => [
+                'name' => 'transaction_number',
+                'required' => false,
+                'filters' => [],
+                'validators' => [],
+            ]
         ],
         'ApigilityLogic\\Finance\\V1\\Rest\\CreditCard\\Validator' => [
             0 => [
