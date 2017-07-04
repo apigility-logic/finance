@@ -1,6 +1,7 @@
 <?php
 namespace ApigilityLogic\Finance;
 
+use ApigilityLogic\Finance\Listener\LedgerServiceListener;
 use ApigilityLogic\Finance\Listener\WithdrawListener;
 use ApigilityLogic\Finance\Listener\WithdrawServiceListener;
 use Zend\Config\Config;
@@ -47,5 +48,8 @@ class Module implements ApigilityProviderInterface
 
         $withdraw_service_listener = new WithdrawServiceListener();
         $withdraw_service_listener->attach($withdraw_listener->getEventManager());
+
+        $ledger_service_listener = new LedgerServiceListener();
+        $ledger_service_listener->attach($withdraw_listener->getEventManager());
     }
 }
